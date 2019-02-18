@@ -1,7 +1,9 @@
 * {
   box-sizing: border-box;
 }
-
+body{
+  background: #f8f8f8;
+}
 .top-img {
   display: block;
   margin: 40px auto;

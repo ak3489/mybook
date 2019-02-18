@@ -5,7 +5,7 @@
     <div class="til">{{ msg }}</div>
       <ul class="book-list">
         <!-- <li v-for="item in books" :key="item.index"><a :href ="'/shtml/'+item.book+'.html'" target="_blank">{{ item.book }}</a></li> -->
-        <li v-for="item in books" v-bind:key="item.id"><router-link :to="{ name: 'chapterlist' }">{{ item.book }}</router-link></li>
+        <li v-for="item in books" v-bind:key="item.id"><router-link :to="{ name: 'chapterlist',params: { book: item.book } }">{{ item.book }}</router-link></li>
       </ul>
     <div class="backhome"><router-link :to="{ name: 'HelloWorld' }">返回首页</router-link></div>
   </div>
@@ -15,10 +15,10 @@ const axios = require('axios')
 export default {
   created: function(){
     axios.get('../../static/books.json')
-  .then(response => {
-    this.books = response.data.data
-    console.log(this.books);
-  })
+    .then(response => {
+      this.books = response.data.data
+      // console.log(this.books);
+    })
   },
   name: 'books',
   data () {

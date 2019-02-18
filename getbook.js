@@ -6,6 +6,7 @@ const cheerio = require("cheerio");
 const request = require("request");
 const fs = require("fs");
 const path = require("path");
+const writeJson = require('./src/writeJson.js');
 let count = 0; //叠加
 let url = 'http://www.ebtang.com/book/2401/directory'; //小说Url
 let list = []; //章节List
@@ -64,56 +65,26 @@ const getBody = function () {
  * 处理章节页面信息
  * @param {any} body 
  */
+var aTitle = [];
 const toQuery = function (body) {
     $ = cheerio.load(body);
     var zjUrl = 'http://www.ebtang.com/book/readbook/'+bookId+'/'+list[count]+'.json';
     const iconv = require('iconv-lite')
     var title=''; //获取章节标题  
     var content= '';
-    // const title = $('h3').text(); //获取章节标题
-    // const content = Trim($('.chapter-wrapper p').text(), 'g'); //获取当前章节文本内容并去除文本所有空格
     request.get({url:zjUrl,encoding:null},function(err,response,body){
         var buf =  iconv.decode(body, 'utf-8'); 
-        // var $ = cheerio.load(buf);
-        // var data = [];
-        var aTitle = [];
         var jdata=JSON.parse(buf);
         title = jdata.bookChapter.title;
-        aTitle.push(title.replace(/\s+/g,""));
+        aTitle.push({title:title.replace(/\s+/g,""),id: count});
         content = jdata.bookChapter.content;
-        // console.log(aTitle); 
-        //插入章节链接
-        // var bookChapter="bookChapter:"+aTitle;
-        var params = {
-            "title":aTitle
-        }
-        console.log(params);
-        function writeJson(params){
-            //现将json文件读出来
-            fs.readFile(path.join(__dirname,`/static/html/${booksName}/${booksName}.json`),function(err,data){
-                if(err){
-                    return console.error(err);
-                }                
-                var chapter = data.toString();//将二进制的数据转换为字符串
-                // console.log(chapter);
-                chapter = JSON.parse(data);//将字符串转换为json对象
-                chapter.data.push(params);//将传来的对象push进数组对象中
-                chapter.total = chapter.data.length;//定义一下总条数，为以后的分页打基础
-                var str = JSON.stringify(chapter);//因为nodejs的写入文件只认识字符串或者二进制数，所以把json对象转换成字符串重新写入json文件中
-                fs.writeFile(path.join(__dirname,`/static/html/${booksName}/${booksName}.json`),str,function(err){
-                    if(err){
-                        console.error(err);
-                    }
-                    // console.log('----------新增成功-------------');
-                })
-            })
-        }
-        writeJson(params)//执行写入章节标题json;
+        // writeJson(aTitle)//执行写入章节标题json;
+        writeJson.writeJson(aTitle,path.join(__dirname,`/static/html/${booksName}/${booksName}.json`))  
         writeFs(title, content);//生成txt文件
         writeHtml(title, content);//生成html文件
         });
-    // writeFs(title, content);
 }
+
 /**
  * 写入txt文件
  * @param {*} title 

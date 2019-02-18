@@ -3,29 +3,42 @@
     <div class="links">
       <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
       <router-link :to="{ name: 'books' }">返回书目</router-link>
+      <router-link :to="{ name: 'chapterlist',params: { book: book } }">返回章节列表</router-link>
     </div>
-    <div id="chapter" v-html="datas">      
+    <div class="til">{{ chapter }}{{ id }}</div> 
+    <div id="chapter" v-html="datas">     
       <div>{{ datas }}</div>
     </div>
+    <div class="pagination">
+      <router-link :to="{ name: 'chapter',params: { chapter: chapter+1} }">上一章</router-link>
+      <router-link :to="{ name: 'chapter',params: { chapter: chapter+1} }">下一章</router-link>
+    </div>    
   </div>
 </template>
 
 <script>
 const axios = require('axios')
-var chapter = '第三十六章百年一梦.html';
-var book = '神鬼湘西';
 export default {
   created: function(){
-    axios.get('../../static/html/'+book+'/'+chapter+'')
-  .then(response => {
-    this.datas = response.data
-  })
+    const chapter = this.$route.params.title;
+    const book = this.$route.params.book;
+    this.chapter = chapter;
+    this.book = book;
+    const id = this.$route.params.id;
+    // this.id = this.$route.params.id;
+    console.log(id);
+    axios.get('../../static/html/'+book+'/'+chapter+'.html')
+    .then(response => {
+      this.datas = response.data
+    })
   },
   name: 'chapter',
   data () {
     return {
-      msg: 'chapter',
-      datas: ''
+      id: '',
+      chapter: '',
+      datas: '',
+      book: ''
     }
   }
 }
@@ -38,5 +51,19 @@ export default {
   }
   .links{
     margin-bottom: 20px;
+  }
+  .til{
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .pagination{
+    position: fixed;
+    top: 350px;
+    left: 50%;
+    margin-left: 570px;
+  }
+  .pagination a{
+    display: block;
+    margin: 10px 0;
   }
 </style>

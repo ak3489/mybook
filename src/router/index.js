@@ -17,20 +17,12 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/chapterlist',
+      path: '/chapterlist/:book',
       name: 'chapterlist',
-      component: chapterlist,
-      children: [
-        {
-          path: ':id',
-          component: {
-            template: '#c'
-          }
-        }
-      ]
+      component: chapterlist
     },
     {
-      path: '/chapter',
+      path: '/chapter/:book/:title',
       name: 'chapter',
       component: chapter
     },

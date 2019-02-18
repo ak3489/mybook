@@ -1,34 +1,27 @@
 <template>
   <div class="books">
-    <router-view>
-    </router-view>
     <div class="til">{{ msg }}</div>
       <ul class="book-list">
-        <li v-for="item in title" :key="item.index"><router-link :to="{ name: 'chapter' }">{{ item.title }}</router-link></li>
+        <li v-for="item in title" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title, id: item.id } }">{{ item.title }}</router-link></li>
       </ul>
-    <div class="backhome"><router-link :to="{ name: 'HelloWorld' }">返回首页</router-link></div>
+    <div class="">
+       <router-link :to="{ name: 'books' }">返回小说列表</router-link>
+      <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
+    </div>
   </div>
 </template>
-<template id="c">
-    <div class="books">
-        user:{{ $route.params.id }}
-        <div class="til">{{ msg }}</div>
-        <ul class="book-list">
-          <li v-for="item in title" :key="item.index"><router-link :to="{ name: 'chapter' }">{{ item.title }}</router-link></li>
-        </ul>
-    </div>
-</template>
 <script>
-console.log(this);
+
 const axios = require('axios')
-var book ='神鬼湘西';
 export default {
   created: function(){
+    var book = this.$route.params.book;
+    // console.log(this.$route.params.book);
     axios.get('../../static/html/'+book+'/'+book+'.json')
-  .then(response => {
-    this.title = response.data.data
-    // console.log(this.title);
-  })
+    .then(response => {
+      this.title = response.data.data
+      // console.log( response.data.data.id);
+    })
   },
 
   name: 'books',
