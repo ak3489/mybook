@@ -1,18 +1,16 @@
 <template>
   <div class="chapter">
-    <div class="links">
-      <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
-      <router-link :to="{ name: 'books' }">返回书目</router-link>
-      <router-link :to="{ name: 'chapterlist',params: { book: book } }">返回章节列表</router-link>
-    </div>
     <div class="til">{{ chapter }}{{ id }}</div> 
-    <div id="chapter" v-html="datas">     
+    <div id="chapter">     
       <div>{{ datas }}</div>
     </div>
-    <div class="pagination">
+    <div class="aside">
+      <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
+      <router-link :to="{ name: 'books' }">返回书目</router-link>
       <router-link :to="{ name: 'chapter',params: { chapter: chapter+1} }">上一章</router-link>
       <router-link :to="{ name: 'chapter',params: { chapter: chapter+1} }">下一章</router-link>
-    </div>    
+    </div>   
+    <!-- <aside><aside> -->
   </div>
 </template>
 
@@ -49,21 +47,8 @@ export default {
   #chapter{
     line-height: 1.8;
   }
-  .links{
-    margin-bottom: 20px;
-  }
   .til{
     text-align: center;
     margin-bottom: 20px;
-  }
-  .pagination{
-    position: fixed;
-    top: 350px;
-    left: 50%;
-    margin-left: 570px;
-  }
-  .pagination a{
-    display: block;
-    margin: 10px 0;
-  }
+  } 
 </style>

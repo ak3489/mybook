@@ -111,6 +111,17 @@ li {
   line-height: 36px;
   background: none;
 }
+.aside{
+  position: fixed;
+  top: 350px;
+  left: 50%;
+  margin-left: 570px;
+  text-align: center;
+} 
+.aside a{
+  display: block;
+  margin: 10px 0;
+}
 
 
 

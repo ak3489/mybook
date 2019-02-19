@@ -4,10 +4,10 @@
       <ul class="book-list">
         <li v-for="item in title" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title, id: item.id } }">{{ item.title }}</router-link></li>
       </ul>
-    <div class="">
-       <router-link :to="{ name: 'books' }">返回小说列表</router-link>
-      <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
-    </div>
+      <div class="aside">
+        <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
+        <router-link :to="{ name: 'books' }">返回书目</router-link>
+      </div> 
   </div>
 </template>
 <script>
