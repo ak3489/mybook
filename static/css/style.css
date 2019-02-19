@@ -118,4 +118,7 @@ li {
 
 @media screen and (max-width: 1080px) {
   .chapter{padding: 0 1rem;}
+  .books li{width: calc((100% - 20px) / 2);}
+  .books li:nth-child(3n) {margin-right: 20px;}
+  .books li:nth-child(2n) {margin-right: 0;}
 } 
