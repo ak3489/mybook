@@ -1,7 +1,7 @@
 <template>
   <div class="chapter">
     <div class="til">{{ chapter }}{{ id }}</div> 
-    <div id="chapter">     
+    <div id="chapter" v-html="datas">     
       <div>{{ datas }}</div>
     </div>
     <div class="aside">
