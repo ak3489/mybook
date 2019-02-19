@@ -1,6 +1,6 @@
 <template>
   <div class="books">
-    <div class="til">{{ msg }}</div>
+    <div class="til">{{ book }}</div>
       <ul class="book-list">
         <li v-for="item in title" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title, id: item.id } }">{{ item.title }}</router-link></li>
       </ul>
@@ -16,11 +16,12 @@ const axios = require('axios')
 export default {
   created: function(){
     var book = this.$route.params.book;
+    this.book = book;
     // console.log(this.$route.params.book);
     axios.get('../../static/html/'+book+'/'+book+'.json')
     .then(response => {
       this.title = response.data.data
-      // console.log( response.data.data.id);
+      // console.log( this.title);
     })
   },
 
@@ -28,6 +29,7 @@ export default {
   data () {
     return {
       msg: '小说列表页',
+      book: '',
       title: [
         
       ]
