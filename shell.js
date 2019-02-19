@@ -15,3 +15,10 @@ var shell = require('shelljs');
 shell.exec('git add .');
 shell.exec("git commit -m 'autocommit'")
 shell.exec('git push')
+
+// 在package.json中加入：
+
+// "script":{
+// +    "push":"node ./shell.js"
+// }
+// 在根目录下执行npm run push就搞定了。

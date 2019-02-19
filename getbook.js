@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const writeJson = require('./src/writeJson.js');
 let count = 0; //叠加
-let url = 'http://www.ebtang.com/book/2401/directory'; //小说Url
+let url = 'http://www.ebtang.com/book/1607/directory'; //小说Url
 let list = []; //章节List
 var mainUrl='';
 let booksName = ''; //小说名称
@@ -75,8 +75,13 @@ const toQuery = function (body) {
     request.get({url:zjUrl,encoding:null},function(err,response,body){
         var buf =  iconv.decode(body, 'utf-8'); 
         var jdata=JSON.parse(buf);
-        title = jdata.bookChapter.title;
-        aTitle.push({title:title.replace(/\s+/g,""),id: count});
+        title = (jdata.bookChapter.title).replace(/[\-\_\,\!\|\~\`\(\)\#\$\%\^\&\*\{\}\:\;\"\L\<\>\?]/g, '');
+        var title1 = title.replace(/[\'\"\\\/\b\f\n\r\t]/g, '');
+        var title2 = title1.replace(/\s+/g,"");
+        title = title2;
+        // title.replace(/[\'\"\\\/\b\f\n\r\t]/g, '');
+        console.log(title);
+        aTitle.push({title:title,id: count});
         content = jdata.bookChapter.content;
         // writeJson(aTitle)//执行写入章节标题json;
         writeJson.writeJson(aTitle,path.join(__dirname,`/static/html/${booksName}/${booksName}.json`))  
