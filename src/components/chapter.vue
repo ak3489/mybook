@@ -10,8 +10,8 @@
       <router-link :to="{ name: 'books' }">返回书目</router-link>
       <router-link :to="{ name: 'chapterlist',params: { book: book } }">章节列表</router-link>
       <router-link :to="{ name: 'chapter',params: { title: this.pre } }" @click.native="flushCom">上一章</router-link>
-     
-    </div>   
+      <a v-on:click="backTop" class="backTop">返回顶部</a>
+    </div>
     <!-- <aside><aside> -->
   </div>
 </template>
@@ -62,7 +62,14 @@ export default {
   methods: {
     flushCom:function(){
       this.$router.go(0);
-    }        
+    },
+    backTop:function(){
+      var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        if (currentScroll > 0) {
+            window.requestAnimationFrame(this.backTop);
+            window.scrollTo (0,currentScroll - (currentScroll/5));
+        }
+    }   
   },
   data () {
     return {
