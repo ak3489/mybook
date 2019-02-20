@@ -2,7 +2,7 @@
   <div class="books">
     <div class="til">{{ book }}</div>
       <ul class="book-list">
-        <li v-for="item in title" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title, id: item.id } }">{{ item.title }}</router-link></li>
+        <li v-for="item in title" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title } }">{{ item.title }}</router-link></li>
       </ul>
       <div class="aside">
         <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
