@@ -73,6 +73,7 @@ function writeFile(){
   }
   var url = "./static/html/" + bookname + "/" + bookname + ".html";
   console.log(txtName);
-  fs.writeFileSync(url, txtName + txt);
+  fs.writeFileSync(url, txt);
+  fs.writeFileSync("./static/html/" + bookname + "/" + bookname + ".json",JSON.stringify({"data":[{"title":bookname,"id":0}]}) );
 };
 writeFile();

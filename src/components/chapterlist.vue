@@ -22,7 +22,10 @@ export default {
     .then(response => {
       this.title = response.data.data
       // console.log( this.title);
-    })
+    }).catch(function (error) {
+      // console.log( this );
+      // this.title = book
+    });
   },
 
   name: 'books',
