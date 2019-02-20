@@ -46,6 +46,7 @@ export default {
 <style scoped>
   #chapter{
     line-height: 1.8;
+    font-size: 18px;
   }
   .til{
     text-align: center;
