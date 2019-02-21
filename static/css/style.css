@@ -127,6 +127,10 @@ li {
 .aside a:hover{color: #154298;}
 .aside a:last-child{border-bottom: 0;}
 
+.txt-chapter{line-height: 1.8;}
+.txt-chapter p{margin-top: 0;margin-bottom: 5px;}
+.txt-chapter .til{text-align: center;}
+
 
 
 

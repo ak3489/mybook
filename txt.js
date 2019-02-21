@@ -52,8 +52,8 @@ writeJson.writeJson(txtName,"./static/books.json");
 
 //var chapterReg = /(\x{7b2c})(\s*)([\x{4e00}\x{4e8c}\x{4e09}\x{56db}\x{4e94}\x{516d}\x{4e03}\x{516b}\x{4e5d}\x{5341}\x{767e}\x{5343}0-9]+)(\s*)([\x{7ae0}\x{8282}]+)/u;
 
-function writeFile(){
-  var bookname = "道门往事";
+function writeFile(bookname){
+  // var bookname = "道门往事";
   var txt;
   var data = fs.readFileSync("./books/" + bookname + ".txt", 'binary');
   // var buf = new Buffer(data, 'binary');
@@ -74,6 +74,6 @@ function writeFile(){
   var url = "./static/html/" + bookname + "/" + bookname + ".html";
   console.log(txtName);
   fs.writeFileSync(url, txt);
-  fs.writeFileSync("./static/html/" + bookname + "/" + bookname + ".json",JSON.stringify({"data":[{"title":bookname,"id":0}]}) );
+  // fs.writeFileSync("./static/html/" + bookname + "/" + bookname + ".json",JSON.stringify({"data":[{"title":bookname,"id":0}]}) );
 };
-writeFile();
+writeFile("道门往事");
