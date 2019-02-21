@@ -3,6 +3,7 @@ node_modules/
 /dist/
 /static/html/
 /static/books.json
+/config/index.js
 /books/
 npm-debug.log*
 yarn-debug.log*

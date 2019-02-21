@@ -1,6 +1,6 @@
 <template>
   <div class="books" v-if="ishtml">
-    <div class="til">{{ book }}</div>
+    <div class="til">{{ book }}<button class="btn btn-primary" v-on:click="updatebook">更新小说</button></div>
       <ul class="book-list" >
         <li v-for="item in title" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title } }">{{ item.title }}</router-link></li>
       </ul>
@@ -10,6 +10,8 @@
       </div> 
   </div>
   <div class="txt-chapter" v-else>
+    <setbg></setbg>
+    <setfont></setfont>  
     <div class="til">{{ book }}</div>
       <div id="chapter" v-html="datas">{{ datas }}</div>
       <div class="aside">
@@ -20,7 +22,12 @@
 </template>
 <script>
 const axios = require('axios')
+import setfont from './common/setfont.vue'
+import setbg from './common/setbg.vue'
 export default {
+  components: {
+    setfont,setbg
+  },
   created: function(){
     var book = this.$route.params.book;
     this.book = book;
@@ -36,6 +43,7 @@ export default {
       // console.log(error.response.status);
       // console.log(error.response.headers);
       if(error.response.status == "404"){
+        // router.push({ path: 'chapter' })
         this.ishtml = false;
         axios.get('../../static/html/'+book+'/'+book+'.html')
         .then(response => {
@@ -52,6 +60,11 @@ export default {
   })
   },
   name: 'books',
+  methods: {
+    updatebook: function(){
+      alert("还没写好");
+    }
+  },
   data () {
     return {
       msg: '小说列表页',
@@ -73,4 +86,5 @@ export default {
   margin: 20px auto;
   font-size: 20px;
 }
+.til .btn{margin-left: 20px;}
 </style>

@@ -17,6 +17,7 @@ export default {
   name: 'HelloWorld',
   methods: {
     getbook: function(url){
+      alert("我还不会写")
     // shell.echo(shell.exec('ls'));
     // shell.cd('../src');
     // shell.cd('../../mybook');

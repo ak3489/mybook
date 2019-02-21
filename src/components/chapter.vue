@@ -1,6 +1,8 @@
 <template>
   <div class="chapter">
-    <div class="til">{{ chapter }}</div> 
+    <setbg></setbg>
+    <setfont></setfont>     
+    <div class="til">{{ chapter }}</div>     
     <div id="chapter" v-html="datas">     
       <div>{{ datas }}</div>
     </div>
@@ -18,7 +20,12 @@
 
 <script>
 const axios = require('axios')
+import setfont from './common/setfont.vue'
+import setbg from './common/setbg.vue'
 export default {
+  components: {
+    setfont,setbg
+  },
   created: function(){
     let chapter = this.$route.params.title;
     const book = this.$route.params.book;
@@ -69,7 +76,7 @@ export default {
             window.requestAnimationFrame(this.backTop);
             window.scrollTo (0,currentScroll - (currentScroll/5));
         }
-    }   
+    },
   },
   data () {
     return {
@@ -78,7 +85,7 @@ export default {
       datas: '',
       book: '',
       pre: '',
-      next: '',      
+      next: '',
     }
   }
 }
@@ -89,6 +96,9 @@ export default {
   #chapter{
     line-height: 1.8;
     font-size: 18px;
+    background: rgba(248,248,248,0.5);
+    padding: 1rem;
+    border-radius: 1rem;
   }
   .til{
     text-align: center;
