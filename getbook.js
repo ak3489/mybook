@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const writeJson = require('./src/writeJson.js');
 let count = 0; //叠加
-let url = 'http://www.ebtang.com/book/1607/directory'; //小说Url
+let url = 'http://www.ebtang.com/book/2448/directory'; //小说Url
 let list = []; //章节List
 var mainUrl='';
 let booksName = ''; //小说名称
@@ -42,7 +42,31 @@ const booksQuery = function (body) {
     });
     createFolder(path.join(__dirname, `/books/${booksName}.txt`)); //创建文件夹
     fs.createWriteStream(path.join(__dirname, `/books/${booksName}.txt`)) //创建txt文件
-    console.log(`开始写入《${booksName}》·······`)       
+    console.log(`开始写入《${booksName}》·······`);
+    // fs.appendFile(txtName,"./static/books.json");
+    // function newbook(){
+    //     var params = [];
+    //     fs.readFile(path.join(__dirname,`/static/books.json`), function(err,data){
+    //         if(err){
+    //         return console.error(err);}
+    //         var books = data.toString();
+    //         books = JSON.parse(data);
+    //         var booklenght = books.data.length;
+    //         params.push({book:booksName,id:booklenght++});
+    //         console.log( booklenght,books.data);
+    //         books.data.concat(params);
+    //         console.log(books.data);
+    //         var str = JSON.stringify(books);
+    //         fs.writeFile(path.join(__dirname,`/static/books.json`),str,function(err){
+    //             if(err){
+    //                 console.error(err);
+    //             }
+    //             console.log('----------新增成功-------------');                        
+    //         })
+    //         // writeJson.writeJson(str,path.join(__dirname,`/static/books.json`))    
+    //     });
+    // }
+    // newbook();
     getBody(); //获取章节信息
 
 }
@@ -50,7 +74,7 @@ const booksQuery = function (body) {
  * 获取章节页面信息
  * 
  */
-const getBody = function () {    
+const getBody = function () {  
     let primUrl = mainUrl + list[count];
     // console.log(primUrl)
     request(primUrl, function (err, res, body) {
@@ -84,7 +108,7 @@ const toQuery = function (body) {
         aTitle.push({title:title,id: count});
         content = jdata.bookChapter.content;
         // writeJson(aTitle)//执行写入章节标题json;
-        writeJson.writeJson(aTitle,path.join(__dirname,`/static/html/${booksName}/${booksName}.json`))  
+        writeJson.writeJson(aTitle,path.join(__dirname,`/static/html/${booksName}/${booksName}.json`))
         writeFs(title, content);//生成txt文件
         writeHtml(title, content);//生成html文件
         });
@@ -105,7 +129,7 @@ const writeFs = function (title, content) {
         if (err) {
             console.log(err)
         } else {
-            // console.log(title + '········保存成功')
+            console.log(title + '········保存成功')
             if (count + 1 < list.length) { //当前页码是否超过章节数
                 count = count + 1;
                 getBody();

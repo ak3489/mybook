@@ -17,8 +17,6 @@ const  join = require('path').join;
  * @param startPath  起始目录文件夹路径
  * @returns {Array}
  */
-
-fs.writeFileSync("./static/books.json",  JSON.stringify({"data":[]}));
 var txtName=[];
 function findSync(startPath) {
     // let result=[];   
@@ -26,6 +24,7 @@ function findSync(startPath) {
         let files=fs.readdirSync(path);
         files.forEach((val,index) => {
             let fPath=join(path,val);
+            // console.log(fPath);
             let stats=fs.statSync(fPath);
             if(stats.isDirectory()) {
               txtName.push(fPath);
@@ -34,7 +33,7 @@ function findSync(startPath) {
             };
             // 读取文件名
             function getFileName(data) {
-              return data.substring(6,data.indexOf("."));
+              return data.substring(13,data.indexOf("."));
             }
             fPath = getFileName(fPath);
             if(stats.isFile()){                          
@@ -44,10 +43,11 @@ function findSync(startPath) {
 
     }
     finder(startPath);
+    
     return txtName;
+    
 }
-let fileNames = findSync('./books');
-
+let fileNames = findSync('./books/tohtml');
 writeJson.writeJson(txtName,"./static/books.json");
 
 //var chapterReg = /(\x{7b2c})(\s*)([\x{4e00}\x{4e8c}\x{4e09}\x{56db}\x{4e94}\x{516d}\x{4e03}\x{516b}\x{4e5d}\x{5341}\x{767e}\x{5343}0-9]+)(\s*)([\x{7ae0}\x{8282}]+)/u;
@@ -55,10 +55,12 @@ writeJson.writeJson(txtName,"./static/books.json");
 function writeFile(bookname){
   // var bookname = "道门往事";
   var txt;
-  var data = fs.readFileSync("./books/" + bookname + ".txt", 'binary');
+//   console.log( bookname);
+  var data = fs.readFileSync("./books/tohtml/" + bookname + ".txt", 'binary');
   // var buf = new Buffer(data, 'binary');
   var buf = Buffer.from(data, 'binary');
-  var data = iconv.decode(buf, 'GBK');
+  // var data = iconv.decode(buf, 'GBK');
+  var data = iconv.decode(buf, 'utf-8');
 
   data = autop.autop(data);
   txt = data;
@@ -71,7 +73,7 @@ function writeFile(bookname){
   if(!folder){
     fs.mkdirSync("./static/html/" + bookname);
   }
-  var url = "./static/html/" + bookname + "/" + bookname + ".html";  
+  var url = "./static/html/" + bookname + "/" + bookname + ".html";
   fs.writeFileSync(url, txt);
   console.log(txtName[i].book);
   // fs.writeFileSync("./static/html/" + bookname + "/" + bookname + ".json",JSON.stringify({"data":[{"title":bookname,"id":0}]}) );

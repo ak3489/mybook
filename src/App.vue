@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="../src/assets/logo.jpg" class="top-img">
+     <router-link :to="{ name: 'books' }"><img src="../src/assets/logo.jpg" class="top-img"></router-link>
     <router-view/>
   </div>
 </template>

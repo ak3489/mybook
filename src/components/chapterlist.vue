@@ -4,10 +4,14 @@
       <ul class="book-list" >
         <li v-for="item in title" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title } }">{{ item.title }}</router-link></li>
       </ul>
-      <div class="aside">
-        <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
-        <router-link :to="{ name: 'books' }">返回书目</router-link>
-      </div> 
+      <asideTool></asideTool>
+      <pagination
+      @change="onPageChange"
+      :page-size="size"
+      :total="total"
+      layout="jumper,total"
+      :current-page="curPage"
+    />
   </div>
   <div class="txt-chapter" v-else>
     <setbg></setbg>
@@ -22,11 +26,13 @@
 </template>
 <script>
 const axios = require('axios')
+import pagination from './common/pagination'
+import asideTool from './common/asideTool'
 import setfont from './common/setfont.vue'
 import setbg from './common/setbg.vue'
 export default {
   components: {
-    setfont,setbg
+    setfont,setbg,pagination,asideTool
   },
   created: function(){
     var book = this.$route.params.book;
@@ -34,7 +40,8 @@ export default {
    axios.get('../../static/html/'+book+'/'+book+'.json')
    .then(response => {
         this.title = response.data.data
-        // console.log( this.title);
+        this.total = response.data.total;
+        return this.total;
     })
   .catch( (error) =>{
     if (error.response) {
@@ -58,10 +65,15 @@ export default {
     }
     // console.log(error.config);
   })
+  console.log( this.total);
   },
   name: 'books',
   methods: {
     updatebook: function(){
+      alert("还没写好");
+    },
+    onPageChange:function(page){      
+      this.curPage = page.curPage;
       alert("还没写好");
     }
   },
@@ -75,7 +87,10 @@ export default {
       ],
       title: [
         
-      ]
+      ],
+      total: 40,
+      size: 10,
+      curPage: 1,
     }
   }
 }

@@ -59,7 +59,7 @@ li {list-style: none;}
   padding: 0 20px;
   text-align: left;
 }
-.books li {
+.book-list li {
   width: calc((100% - 40px) / 3);
   position: relative;
   vertical-align: top;
@@ -72,10 +72,10 @@ li {list-style: none;}
   border-bottom: 1px solid #ccc;
   font-size: 14px;
 }
-.books li:nth-child(3n) {
+.book-list li:nth-child(3n) {
     margin-right: 0;
 }
-.books li a{
+.book-list li a{
   display: block;
   padding: 0;
   font-size: 14px;
@@ -83,16 +83,6 @@ li {list-style: none;}
   line-height: 36px;
   background: none;
 }
-.aside{
-  position: fixed;
-  top: 350px;
-  left: 50%;
-  margin-left: 570px;
-  text-align: center;
-} 
-.aside a{display: block;padding: 10px 0;border-bottom: 1px dashed;}
-.aside a:hover{color: #154298;}
-.aside a:last-child{border-bottom: 0;}
 
 .txt-chapter{line-height: 1.8;}
 .txt-chapter p{margin-top: 0;margin-bottom: 5px;}

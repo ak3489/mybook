@@ -6,25 +6,18 @@
     <div id="chapter" v-html="datas">     
       <div>{{ datas }}</div>
     </div>
-    <div class="aside">
-      <router-link :to="{ name: 'chapter',params: { title: this.next } }" @click.native="flushCom">下一章</router-link>
-      <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
-      <router-link :to="{ name: 'books' }">返回书目</router-link>
-      <router-link :to="{ name: 'chapterlist',params: { book: book } }">章节列表</router-link>
-      <router-link :to="{ name: 'chapter',params: { title: this.pre } }" @click.native="flushCom">上一章</router-link>
-      <a v-on:click="backTop" class="backTop">返回顶部</a>
-    </div>
-    <!-- <aside><aside> -->
+    <asideTool :ischapter="ischapter" :pre="pre" :next="next" :book="book"></asideTool>
   </div>
 </template>
 
 <script>
 const axios = require('axios')
+import asideTool from './common/asideTool'
 import setfont from './common/setfont.vue'
 import setbg from './common/setbg.vue'
 export default {
   components: {
-    setfont,setbg
+    setfont,setbg,asideTool
   },
   created: function(){
     let chapter = this.$route.params.title;
@@ -86,6 +79,7 @@ export default {
       book: '',
       pre: '',
       next: '',
+      ischapter: true,
     }
   }
 }
