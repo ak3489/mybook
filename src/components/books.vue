@@ -7,12 +7,17 @@
         <!-- <li v-for="item in books" :key="item.index"><a :href ="'/shtml/'+item.book+'.html'" target="_blank">{{ item.book }}</a></li> -->
         <li v-for="item in books" v-bind:key="item.id"><router-link :to="{ name: 'chapterlist',params: { book: item.book } }">{{ item.book }}</router-link></li>
       </ul>
-    <div class="backhome"><router-link :to="{ name: 'HelloWorld' }">返回首页</router-link></div>
+    <!-- <div class="backhome"><router-link :to="{ name: 'HelloWorld' }">返回首页</router-link></div> -->
+     <asideTool :isntbook="isntbook"></asideTool>
   </div>
 </template>
 <script>
 const axios = require('axios')
+import asideTool from './common/asideTool'
 export default {
+  components: {
+    asideTool
+  },
   created: function(){
     axios.get('../../static/books.json')
     .then(response => {
@@ -26,7 +31,8 @@ export default {
       msg: '小说列表页',
       books: [
         
-      ]
+      ],
+      isntbook: false,
     }
   }
 }

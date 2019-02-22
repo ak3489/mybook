@@ -2,7 +2,7 @@
   <div class="aside">
     <router-link v-if="ischapter" :to="{ name: 'chapter',params: { title: this.next } }" @click.native="flushCom">下一章</router-link>
     <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
-    <router-link :to="{ name: 'books' }">返回书目</router-link>
+    <router-link v-if="isntbook" :to="{ name: 'books' }">返回书目</router-link>
     <router-link v-if="ischapter" :to="{ name: 'chapterlist',params: { book: book } }">章节列表</router-link>
     <router-link v-if="ischapter" :to="{ name: 'chapter',params: { title: this.pre } }" @click.native="flushCom">上一章</router-link>
     <a v-on:click="backTop" class="backTop">返回顶部</a>
@@ -14,6 +14,10 @@ export default {
     ischapter: {
       type: Boolean,
       default: false
+    },
+    isntbook: {
+      type: Boolean,
+      default: true
     },
     pre: {
       type: String

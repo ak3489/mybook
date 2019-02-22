@@ -18,10 +18,7 @@
     <setfont></setfont>  
     <div class="til">{{ book }}</div>
       <div id="chapter" v-html="datas">{{ datas }}</div>
-      <div class="aside">
-        <router-link :to="{ name: 'HelloWorld' }">返回首页</router-link>
-        <router-link :to="{ name: 'books' }">返回书目</router-link>
-      </div> 
+      <asideTool></asideTool> 
   </div>
 </template>
 <script>
@@ -83,7 +80,6 @@ export default {
       book: '',
       ishtml: true,
       datas: [
-
       ],
       title: [
         

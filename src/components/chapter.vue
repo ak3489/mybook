@@ -90,7 +90,7 @@ export default {
   #chapter{
     line-height: 1.8;
     font-size: 18px;
-    background: rgba(248,248,248,0.5);
+    background: rgba(248,248,248,0.85);
     padding: 1rem;
     border-radius: 1rem;
   }
