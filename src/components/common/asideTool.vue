@@ -53,4 +53,12 @@ export default {
 .aside a{display: block;padding: 10px 0;border-bottom: 1px dashed;}
 .aside a:hover{color: #154298;}
 .aside a:last-child{border-bottom: 0;}
+@media screen and (max-width: 1080px) {
+  .books li{width: calc((100% - 20px) / 2);}
+  .books li:nth-child(3n) {margin-right: 20px;}
+  .books li:nth-child(2n) {margin-right: 0;}
+  .aside{position: static;margin-left: 0;margin-top: 10px;}
+  .aside a{background: #6b6c70;color: #fff;margin-bottom: 10px;border-bottom: 0;}
+  .aside a:hover{color: #fff;}
+} 
 </style>
