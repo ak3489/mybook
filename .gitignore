@@ -14,5 +14,5 @@ yarn-error.log*
 *.sln
 /static/html/*
 /static/books.json
-/config/index.js
+# /config/index.js
 /books/*
