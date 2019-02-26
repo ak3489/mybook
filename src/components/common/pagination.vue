@@ -14,8 +14,9 @@
 </template>
 
 <script>
+var pagearr;
 export default {
-  name: 'Paging',
+//   name: 'Paging',
   // props:[
   //    'name'
   // ],
@@ -29,6 +30,9 @@ export default {
     total: {
       type: Number,
       default: 0
+    },
+    totalData: {
+      type: Array,
     },
     currentPage: {
       type: Number,
@@ -47,17 +51,29 @@ export default {
     }
   },
   created: function () {
-        console.log('created');
         this.isShowTotal = this.layout.indexOf('total')!==-1;
         this.isShowJumper = this.layout.indexOf('jumper')!==-1;
     },
     mounted: function () {
-        console.log('mounted',this.layout);
+        // console.log('mounted',this.layout);
     },
     computed:{
         totalPage:function(){
             return Math.ceil(this.total / this.pageSize)
         },
+        // pagearr:function(){
+        //     var pagearr;
+        //     var pagec = this.sliceArray(this.totalData, this.pageSize);
+        //     var pageNum = this.$parent.curPage;
+        //     if(pageNum<0){
+        //         pageNum == 0;
+        //     }else if(pageNum>pagec.length){
+        //         pageNum==pagec.length
+        //     }
+        //     pagearr = pagec[pageNum];
+        //     console.log("读取的的索引"+this.$parent.curPage);
+        //     return pagearr
+        // },
         pagelist:function(){
             var list = [];
             var count = Math.floor(this.pageGroup/2), center = this.currentPage;
@@ -87,6 +103,11 @@ export default {
             return list;
         }
     },
+    watch: {
+        currentPage:function(){
+            this.changePage(this.currentPage);
+        }
+    },
   methods:{
     // 回车事件
     submit(toPage,e){
@@ -98,11 +119,33 @@ export default {
         }
     },
     changePage:function(idx){
-        if(idx!=this.currentPage && idx>0 && idx<=this.totalPage){
+        if(idx>0 && idx<=this.totalPage){
             // 触发父组件事件  pageChange会转换成小写pagechange
-            this.$emit('change',{curPage:Number(idx)});
+            var pagec = this.sliceArray(this.totalData, this.pageSize);
+            var pageNum = this.currentPage-1;
+            if(pageNum<0){
+                pageNum == 0;
+            }else if(pageNum>=pagec.length){
+                pageNum==pagec.length
             }
-    }
+            pagearr = pagec[pageNum];
+            // console.log("读取的的索引"+this.currentPage,pagearr);
+            // console.log("currentPage"+this.currentPage,"读取的页面"+pageNum,pagearr);
+            //  return  pagearr
+            this.$emit('change',{curPage:Number(idx),page:pagearr});
+            // console.log("下一个读取的的索引"+idx,pagearr);
+            }
+            
+    },
+    sliceArray:function(array, size) {
+        var result = [];
+        for (var x = 0; x < Math.ceil(array.length / size); x++) {
+            var start = x * size;
+            var end = start + size;
+            result.push(array.slice(start, end));
+        }
+        return result;
+        },
     }
 }
 </script>
@@ -113,6 +156,7 @@ export default {
         padding: 0;
         margin: 0;
 }
+.paging {margin-left: 20px;}
 .fl{
     float: left;
 }

@@ -2,15 +2,16 @@
   <div class="books" v-if="ishtml">
     <div class="til">{{ book }}<button class="btn btn-primary" v-on:click="updatebook">更新小说</button></div>
       <ul class="book-list" >
-        <li v-for="item in title" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title } }">{{ item.title }}</router-link></li>
+        <li v-for="item in pagedata" v-bind:key="item.id"><router-link :to="{ name: 'chapter',params: { title: item.title } }">{{ item.title }}</router-link></li>
       </ul>
       <asideTool></asideTool>
       <pagination
       @change="onPageChange"
       :page-size="size"
       :total="total"
+      :totalData="title"
       layout="jumper,total"
-      :current-page="curPage"
+      :currentPage="curPage"
     />
   </div>
   <div class="txt-chapter" v-else>
@@ -38,6 +39,8 @@ export default {
    .then(response => {
         this.title = response.data.data
         this.total = response.data.total;
+        this.pagedata =  this.title.slice(0,this.size);
+        // console.log( this.title);
         return this.total;
     })
   .catch( (error) =>{
@@ -62,16 +65,26 @@ export default {
     }
     // console.log(error.config);
   })
-  console.log( this.total);
+  // console.log( this.total);
   },
   name: 'books',
   methods: {
     updatebook: function(){
       alert("还没写好");
     },
+    objOfPropertyToArr: function(object){
+      var arr = [];
+      var i = 0;
+      for (var item in object) {
+          arr[i] = object[item];
+          i++;
+      }
+      return arr;
+    },
     onPageChange:function(page){      
-      this.curPage = page.curPage;
-      alert("还没写好");
+      this.curPage = page.curPage;      
+      this.pagedata = this.objOfPropertyToArr(page.page)
+      // console.log(this.pagedata);
     }
   },
   data () {
@@ -79,13 +92,11 @@ export default {
       msg: '小说列表页',
       book: '',
       ishtml: true,
-      datas: [
-      ],
-      title: [
-        
-      ],
+      datas: [],
+      title: [],
+      pagedata:[],
       total: 40,
-      size: 10,
+      size: 42,
       curPage: 1,
     }
   }
